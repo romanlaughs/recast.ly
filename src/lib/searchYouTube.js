@@ -13,13 +13,6 @@ var searchYouTube = (query, callback) => {
   });
 };
 
-// const videoObj = {};
-
-// var videosArray2 = searchYouTube('', data => {
-//   if (videoObj['array'] === undefined) {
-//     videoObj['array'] = data;
-//   }
-// } );
 
 
 export default searchYouTube;

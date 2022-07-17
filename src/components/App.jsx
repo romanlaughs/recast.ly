@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       videosArray: [],
       videoPlaying: {},
-      query: 'Hack Reactor',
+      query: 'Breast Feeding',
     };
   }
 
@@ -26,13 +26,18 @@ class App extends React.Component {
   }
 
   search(string) {
-    searchYouTube(string, (data) => {
-      this.setState({
-        videoPlaying: data[0],
-        videosArray: data
+    var debounce = _.debounce(() => {
+      searchYouTube(string, (data) => {
+        this.setState({
+          videoPlaying: data[0],
+          videosArray: data
+        });
       });
-    });
+    }, 1000);
+
+    debounce();
   }
+
 
   onTitleClick(event) {
     for (var i = 0; i < this.state.videosArray.length; i++) {
@@ -44,29 +49,23 @@ class App extends React.Component {
     }
   }
 
-  // onQueryChange(event) {
-  //   console.log(event.target.innerText);
-  //   if (event.target.innerText !== '' && event.target.innerText !== this.state.query) {
-  //     this.setState({
-  //       query: event.target.innerText
-  //     });
-  //     searchYouTube(event.target.innerText, (data) => {
-  //       this.setState({
-  //         videoPlaying: data[0],
-  //         videoArray: data
-  //       });
-  //     });
-  //   }
-  // }
-
-  // onButtonClick(event) {
-  //   console.log(event);
-
-  // }
-
-
   render () {
-    var loading = <div></div>;
+    var loading = <div>
+      <nav className="navbar">
+        <div className="col-md-6 offset-md-3 form-control">
+          <div><h5><em>search</em> view goes here</h5></div>
+        </div>
+      </nav>
+      <div className="row">
+        <div className="col-md-7 video-player">
+          <div><h5><em>videoPlayer</em> view goes here</h5></div>
+        </div>
+        <div className="col-md-5 video-list">
+          <div><h5><em>videoList</em> view goes here</h5></div>
+        </div>
+      </div>
+    </div>;
+
     var final = (
       <div>
         <nav className="navbar">
@@ -93,10 +92,4 @@ class App extends React.Component {
 
 }
 
-
-// console.log(exampleVideoData);
-
-// In the ES6 spec, files are "modules" and do not share a top-level scope
-// `var` declarations will only exist globally where explicitly defined
-//ReactDOM.render(<App />, document.getElementById('app'));
 export default App;
